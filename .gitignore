@@ -1,0 +1,5 @@
+# build directory
+build
+
+# pycharm files
+.idea
