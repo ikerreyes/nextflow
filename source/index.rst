@@ -16,6 +16,10 @@ Welcome to Nextflow's documentation!
    debug
    howtos
 
+A ``bin`` directory in the execution directory is copied
+and added to the path, so scripts in it are accessible.
+
+
 Indices and tables
 ==================
 

@@ -54,6 +54,15 @@ A process indicates how given an output, what to do to generate an output.
         """
     }
 
+  It is possible to add shell variables with ``\${SHELL_VAR}``
+  when using double quotes, but the recommended approach is
+  to define them in a separate script.
+  Note that some variables (e.g. PATH) are defined also by nextflow,
+  which can lead to errors.
+
+``shell``
+  similar to script but groovy variables can be accessed as '''!{var}'''
+
 ``input``
   section that has the channels the process is expecting to receive inputs data
   from
@@ -127,6 +136,11 @@ ternary operator
     seedOpt = (params.seed == null)? '': "--seed ${params.seed}"
 
 
+**Closures** ( ``{ }``) are functions as first class objects,
+that have the ``it`` defined as the implicit argument of the closure.
+The can be seen as a trick to assign a function to a variable.
+The difference with a lambda expression is that it can access and modify global variables.
+
 
 Channels
 --------
@@ -137,7 +151,8 @@ In case you want to use a channel in more than one process, make a copy::
 
     CHANNEL.into { COPY1; COPY2 }
 
-As mentioned, value channels can be used multiple times, but it doesn't mean
+As mentioned, value channels (which are restricted to one object)
+can be used multiple times, but it doesn't mean
 that what they hold can only be used as ``val``::
 
     VALUE = Channel.value("/path/to/file")
@@ -150,6 +165,7 @@ that what they hold can only be used as ``val``::
 
     }
 
+The **fromFilePairs** method will not output the pairs in which one of the elements does not exits.
 
 Operations
 **********
@@ -176,3 +192,7 @@ Channels support a series of operations, than can be chained if needed.
 
 ``collect``
   wait for all items of the channel and emit them at once
+
+``mix`` ``grouTuple``
+  combine channels
+
